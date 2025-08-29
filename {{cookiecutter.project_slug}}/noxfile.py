@@ -175,21 +175,31 @@ def _commit(session: Session) -> None:  # type: ignore[reportUnusedFunction]
     """Adds the project to git and commits via commitizen"""
     session.run("git", "add", ".")
     session.run("cz", "commit")
+    session.run("git", "push", "-u", "origin", "develop")
+
+
+@nox.session(python=False)
+def publish(session: nox.Session) -> None:
+    "Publish on PyPI with using Hatch"
+    session.notify("clean")
+    session.run("hatch", "clean")
+    session.run("hatch", "build")
+    session.run("hatch", "publish", "-y")
 
 
 @nox.session
 def commit(session: Session) -> None:
-    """Full CI cycle and commit only if there are no errors"""
+    """Full CI cycle and commit only if there are no errors plus publish"""
     session.run("nox", "-s", "ci-3.13", external=True)
     session.run("nox", "-s", "clean", external=True)
-    session.run("nox", "-s", "commit", external=True)
+    session.run("nox", "-s", "_commit", external=True)
+    session.run('nox', '-s', 'publish', external=True)
 
 
 @nox.session(python=False)
 def bump(session: Session) -> None:
     """Bump via commitizen + `git push -u origin main`"""
     session.run("cz", "bump")
-    session.run("git", "push", "-u", "origin", "develop")
 
 
 @nox.session(python=False)

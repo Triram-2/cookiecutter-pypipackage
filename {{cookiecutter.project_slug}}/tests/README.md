@@ -9,3 +9,6 @@ compatibility - compatibility tests
 
 mocks - mocks and stubs
 fixtures - fixtures for tests
+
+
+!!! REMOVE UNUZED DIRECTORIES
