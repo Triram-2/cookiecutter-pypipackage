@@ -1,0 +1,13 @@
+{
+    "project_name": "My Amazing Project",
+    "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_') }}",
+    "author_name": "Your Name",
+    "author_email": "your.email@example.com",
+    "year": "2025",
+    "version": "0.0.0",
+    "description": "A short description of the project",
+    "python_version": ["3.12", "3.13", "3.14"],
+    "use_gitlab": ["y", "n"],
+    "use_todo_md": ["y", "n"],
+    "license": ["MIT", "BSD", "Apache", "GPL", "none"]
+}
