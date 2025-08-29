@@ -194,13 +194,13 @@ def commit(session: Session) -> None:
     session.run("nox", "-s", "ci-3.13", external=True)
     session.run("nox", "-s", "clean", external=True)
     session.run("nox", "-s", "_commit", external=True)
-    session.run('nox', '-s', 'publish', external=True)
 
 
 @nox.session(python=False)
 def bump(session: Session) -> None:
     """Bump via commitizen + `git push -u origin main`"""
     session.run("cz", "bump")
+    session.run('nox', '-s', 'publish', external=True)
 
 
 @nox.session(python=False)
