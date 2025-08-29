@@ -10,7 +10,7 @@ dev-mode-dirs = ["src"]
 
 [envs.virtual]
 python = {{ cookiecutter.python_version }}
-platforms = ["linux", "windows"]
+platforms = ["linux", "windows", "macos"]
 
 [tool.hatch.metadata]
 allow-direct-references = true
