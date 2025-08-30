@@ -92,6 +92,18 @@ def test(session: Session) -> None:
     session.log("Testing finished successfully.")
 
 
+@nox.session(python=PYTHON_VERSIONS)
+def unit_test(session: Session) -> None:
+    "Run only unit tests"
+    session.notify('test', 'tests/unit')
+
+
+@nox.session(python=PYTHON_VERSIONS)
+def all_tests(session: Session) -> None:
+    "Run all tests"
+    session.notify('test', 'tests')
+
+
 @nox.session(python=None)
 def audit(session: Session) -> None:
     """Runs dependency audit with `pip-audit`"""
@@ -199,7 +211,8 @@ def commit(session: Session) -> None:
 @nox.session(python=False)
 def bump(session: Session) -> None:
     """Bump via commitizen + `git push -u origin main`"""
-    session.run("cz", "bump")
+    session.run('nox', '-s', 'all-tests', external=True)
+    session.run("cz", "bump", external=True)
     session.run('nox', '-s', 'publish', external=True)
 
 
