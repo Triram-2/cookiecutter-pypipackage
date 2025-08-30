@@ -232,4 +232,4 @@ def ci_pipeline(session: nox.Session) -> None:
 
     suffix = f"-{python_version}" if isinstance(python_version, str) else ""
     session.notify(f"lint{suffix}")
-    session.notify(f"test{suffix}")
+    session.notify(f"unit-test{suffix}")
