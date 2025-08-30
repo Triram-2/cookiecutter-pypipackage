@@ -17,7 +17,6 @@ PYPROJECT_CONTENT: Dict[str, Any] = tomllib.loads(Path("pyproject.toml").read_te
 PROJECT_NAME: str = PYPROJECT_CONTENT["project"]["name"]
 PYTHON_VERSIONS: List[str] = ["3.12", "3.13"]
 SRC_DIR: str = "src"
-TESTS_DIR: str = "tests"
 DOCS_DIR: str = "docs"
 COVERAGE_FAIL_UNDER: int = 0  # TODO: change to 80-99
 os.environ["PYTHONDONTWRITEBYTECODE"] = "1"
@@ -63,6 +62,8 @@ def test(session: Session) -> None:
     session.log("Installing dependencies for testing...")
     install_project_with_deps(session, "test")
 
+    tests_dir = session.posargs[0] if session.posargs else 'tests/unit'
+
     session.log("Running tests with coverage...")
     session.run(
         "coverage",
@@ -71,7 +72,7 @@ def test(session: Session) -> None:
         SRC_DIR,
         "-m",
         "pytest",
-        TESTS_DIR,
+        tests_dir,
         *session.posargs,
         env={
             "PYTHONPATH": SRC_DIR,
