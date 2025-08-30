@@ -93,16 +93,16 @@ def test(session: Session) -> None:
     session.log("Testing finished successfully.")
 
 
-@nox.session(python=PYTHON_VERSIONS)
+@nox.session(python=PYTHON_VERSIONS, name='unit-test')
 def unit_test(session: Session) -> None:
     "Run only unit tests"
-    session.notify('test', 'tests/unit')
+    session.notify('test', ['tests/unit'])
 
 
-@nox.session(python=PYTHON_VERSIONS)
+@nox.session(python=PYTHON_VERSIONS, name='all-tests')
 def all_tests(session: Session) -> None:
     "Run all tests"
-    session.notify('test', 'tests')
+    session.notify('test', ['tests'])
 
 
 @nox.session(python=None)
